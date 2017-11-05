@@ -31,6 +31,21 @@ app.get('/', function(req, res){
     res.sendFile(__dirname + '/index.html');
 });
 
+app.get('/api/overview',function(req,res){
+    db.getAllCustomers().then(function(result){
+        res.json({
+            status: 200,
+            customers: result.rows
+        });
+
+    }).catch(function(err){
+        console.log(err);
+        res.json({
+            success: false
+        });
+    });
+});
+
 
 app.get('*', function(req, res) {
     res.sendFile(__dirname + '/index.html');
