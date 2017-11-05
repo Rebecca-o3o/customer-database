@@ -1,0 +1,14 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Gotham SSm A','Gotham SSm B',sans-serif;
+    box-sizing: border-box;
+    color: #333
+}
+
+.navbar-nav a {
+    text-transform: uppercase;
+}
+
+@media (max-width: 400px) {
+}
