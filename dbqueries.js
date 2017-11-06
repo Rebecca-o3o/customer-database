@@ -14,3 +14,16 @@ module.exports.getCustomerDetails = function(customerId){
         console.log(err);
     });
 };
+
+module.exports.deleteCustomer = function(customerid){
+
+    const queryText = `DELETE FROM customers WHERE customerid=$1`;
+
+    return db.query(queryText, [customerid]).then(()=>{
+        return {
+            status: "deleted",
+        };
+    }).catch((err)=>{
+        console.log(err);
+    });
+};

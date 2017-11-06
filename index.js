@@ -62,6 +62,20 @@ app.get('/api/customer/:customerid', function(req, res) {
     });
 });
 
+app.post('/api/customer/delete', function(req,res){
+
+    const customerid = req.body.customerid;
+
+    db.deleteCustomer(customerid).then(function(result){
+
+        res.json({
+            success: true
+        });
+    }).catch(function(err){
+        console.log(err);
+    });
+});
+
 app.get('*', function(req, res) {
     res.sendFile(__dirname + '/index.html');
 });

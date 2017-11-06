@@ -2,6 +2,8 @@ import React from 'react';
 import {Link} from 'react-router';
 import axios from 'axios';
 
+import DeleteCustomer from './delete-customer';
+
 export class App extends React.Component {
     constructor(props){
         super(props);
@@ -52,6 +54,8 @@ export class App extends React.Component {
                 return (
                     <div>
                         <a href={`/api/customer/${customer.customerid}`}>{customer.customerid},{customer.first},{customer.last},{customer.gender}, {customer.birthday},{customer.customerlifetimevalue},{customer.lastcontact}</a>
+                        <a href={`/api/customer/${customer.customerid}`} class="btn btn-default">EDIT</a>
+                        <DeleteCustomer id={customer.customerid}/>
                     </div>
                 );
             });
