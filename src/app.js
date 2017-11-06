@@ -10,22 +10,34 @@ export class App extends React.Component {
 
     componentDidMount() {
 
-        axios.get('/api/overview').then((serverResponse)=> {
+        const cachedCustomers = localStorage.getItem('storedCustomers');
 
-            if(serverResponse.data.customers) {
-                this.setState({
-                    customers: serverResponse.data.customers
-                });
-            } else {
-                console.log('Mount error', serverResponse);
-            }
-        }).catch((e) =>{
+        if (cachedCustomers) {
             this.setState({
-                error: 'Ups! Please try again!'
+                customers: JSON.parse(cachedCustomers),
             });
-            console.error(e);
-        })
-        ;
+            return;
+        }
+        else {
+
+            axios.get('/api/overview').then((serverResponse)=> {
+
+                if(serverResponse.data.customers) {
+                    this.setState({
+                        customers: serverResponse.data.customers
+                    });
+                    localStorage.setItem('storedCustomers', JSON.stringify(serverResponse.data.customers));
+
+                } else {
+                    console.log('Mount error', serverResponse);
+                }
+            }).catch((e) =>{
+                this.setState({
+                    error: 'Ups! Please try again!'
+                });
+                console.error(e);
+            });
+        }
     }
 
     render() {
