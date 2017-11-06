@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router';
 import axios from 'axios';
 
 export class App extends React.Component {
@@ -38,13 +39,9 @@ export class App extends React.Component {
             return this.state.customers.map(customer => {
                 return (
                     <div>
-                        {customer.customerid},
-                        {customer.first},
-                        {customer.last},
-                        {customer.gender},
-                        {customer.birthday},
-                        {customer.customerlifetimevalue},
-                        {customer.lastcontact}
+                        <Link to={`/customer/${customer.customerid}`}>
+                            <p>{customer.customerid},{customer.first},{customer.last},{customer.gender}, {customer.birthday},{customer.customerlifetimevalue},{customer.lastcontact}</p>
+                        </Link>
                     </div>
                 );
             });
