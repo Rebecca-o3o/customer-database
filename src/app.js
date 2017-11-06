@@ -51,9 +51,7 @@ export class App extends React.Component {
             return this.state.customers.map(customer => {
                 return (
                     <div>
-                        <Link to={`/customer/${customer.customerid}`}>
-                            <p>{customer.customerid},{customer.first},{customer.last},{customer.gender}, {customer.birthday},{customer.customerlifetimevalue},{customer.lastcontact}</p>
-                        </Link>
+                        <a href={`/api/customer/${customer.customerid}`}>{customer.customerid},{customer.first},{customer.last},{customer.gender}, {customer.birthday},{customer.customerlifetimevalue},{customer.lastcontact}</a>
                     </div>
                 );
             });
