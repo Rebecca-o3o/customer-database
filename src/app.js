@@ -12,34 +12,35 @@ export class App extends React.Component {
 
     componentDidMount() {
 
-        const cachedCustomers = localStorage.getItem('storedCustomers');
+        //if I had used local Storage
+        // const cachedCustomers = localStorage.getItem('storedCustomers');
+        //
+        // if (cachedCustomers) {
+        //     this.setState({
+        //         customers: JSON.parse(cachedCustomers),
+        //     });
+        //     return;
+        // }
+        // else {
 
-        if (cachedCustomers) {
-            this.setState({
-                customers: JSON.parse(cachedCustomers),
-            });
-            return;
-        }
-        else {
+        axios.get('/api/overview').then((serverResponse)=> {
 
-            axios.get('/api/overview').then((serverResponse)=> {
-
-                if(serverResponse.data.customers) {
-                    this.setState({
-                        customers: serverResponse.data.customers
-                    });
-                    localStorage.setItem('storedCustomers', JSON.stringify(serverResponse.data.customers));
-
-                } else {
-                    console.log('Mount error', serverResponse);
-                }
-            }).catch((e) =>{
+            if(serverResponse.data.customers) {
                 this.setState({
-                    error: 'Ups! Please try again!'
+                    customers: serverResponse.data.customers
                 });
-                console.error(e);
+                // localStorage.setItem('storedCustomers', JSON.stringify(serverResponse.data.customers));
+
+            } else {
+                console.log('Mount error', serverResponse);
+            }
+        }).catch((e) =>{
+            this.setState({
+                error: 'Ups! Please try again!'
             });
-        }
+            console.error(e);
+        });
+        // }
     }
 
     render() {

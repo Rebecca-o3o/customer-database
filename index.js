@@ -49,7 +49,7 @@ app.get('/api/overview',function(req,res){
 app.get('/api/customer/:customerid', function(req, res) {
 
     db.getCustomerDetails(req.params.customerid).then(function(result){
-        console.log(result);
+        // console.log(result);
         res.json({
             status: 200,
             customer: result
