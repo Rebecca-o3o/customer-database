@@ -3,11 +3,20 @@ import {Link} from 'react-router';
 import axios from 'axios';
 
 import DeleteCustomer from './delete-customer';
+import AddCustomer from './add-customer';
 
 export class App extends React.Component {
     constructor(props){
         super(props);
-        this.state = {};
+        this.state = {
+            showAddCustomerWindow: false
+        };
+        this.calculateAge = this.calculateAge.bind(this);
+        this.calculateLastContact = this.calculateLastContact.bind(this);
+        this.showAddCustomer = this.showAddCustomer.bind(this);
+        this.hideAddCustomer = this.hideAddCustomer.bind(this);
+        this.getNewCustomerValues = this.getNewCustomerValues.bind(this);
+        this.submitNewCustomer = this.submitNewCustomer.bind(this);
     }
 
     componentDidMount() {
@@ -95,11 +104,55 @@ export class App extends React.Component {
         }
     }
 
+    showAddCustomer(){
+        this.setState({
+            showAddCustomerWindow: true
+        });
+    }
+
+    hideAddCustomer(){
+        this.setState({
+            showAddCustomerWindow: false
+        });
+    }
+
+    getNewCustomerValues(e) {
+        this.setState({
+            textareaFirst : e.target.value,
+            textareaLast : e.target.value
+        });
+    }
+
+    submitNewCustomer(){
+        let {textareaBio} = this.state;
+
+        axios.post("/customer/add", {
+            bio: textareaBio
+        }).catch((err)=>{
+            this.setState({
+                error: 'Ups! Something went wrong!'
+            });
+            console.log(err);
+        });
+
+        this.setState({
+            showAddCustomerWindow: false
+        });
+    }
+
     render() {
 
         if(!this.state.customers) {
             return <div>Loading...</div>;
         }
+        const children = React.cloneElement(this.props.children, {
+
+            error: this.state.error,
+            showAddCustomer: this.showAddCustomer,
+            hideAddCustomer: this.hideAddCustomer,
+            getNewCustomerValues: this.getNewCustomerValues,
+            submitNewCustomer: this.submitNewCustomer,
+        });
 
         const renderCustomers = () => {
 
@@ -123,13 +176,19 @@ export class App extends React.Component {
             });
         };
 
-
-
         return (
 
             <div className="container-fluid">
 
                 <h1>Welcome to this customer overview!</h1>
+
+                {this.state.showAddCustomerWindow && <AddCustomer
+                    handleChange = {(e) => this.handleChange(e)}
+                    submitNewCustomer={this.submitNewCustomer}
+                    showAddCustomer={this.showAddCustomer}
+                    hideAddCustomer={this.hideAddCustomer}/>}
+
+                {/* {children} */}
 
                 <div className="row">
                     <div class="col-sm-1">ID</div>
