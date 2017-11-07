@@ -28,9 +28,7 @@ export default class DeleteCustomer extends React.Component{
         return (
 
             <div>
-                <button
-                    onClick={this.delete}
-                >DELETE</button>
+                <a href="/" onClick={this.delete} className="btn btn-danger btn-sm">DELETE</a>
             </div>
         );
     }
